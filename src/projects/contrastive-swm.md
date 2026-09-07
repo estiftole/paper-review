@@ -49,16 +49,16 @@ $$
 $$
 where $d(z_t + \Delta z_t, z_{t+1})$ is the difference between the predicted and actual next states, $d(\tilde{z}_{t}, z_{t+1})$ is the difference between a negative sample and actual next state, and $\gamma$ is a hyperparameter that represents the minimum acceptable distance between two states that are not alike.
 
-### **Encoder**
+### Encoder
 The encoder module is composed of a CNN-based model for object extraction $E_{ext}$ and an MLP-based object encoder $E_{enc}$.
 The object extractor takes an image as input and returns $K$ feature maps where each feature map $m_t^k$ can be interpreted as belonging to one particular object. $E_{enc}$ then takes one feature map $m_t^k$ at a time and returns the corresponding abstract state representation $z_t^k$.  
-### **Transition Model**
+### Transition Model
 The transition model $T$ takes the latent state $z_t$ and action $a_t$, and returns the change in the state $\Delta z_t$:
 $$
 \Delta z_t = T(z_t, a_t) = GNN(\{(z_t, a_t)\}_{k=1}^K)
 $$
 Implementing the transition model as a GNN provides permutation invariance (i.e. the order of objects doesn't matter, which would be a problem when using a standard MLP), and is a natural choice when modeling the environment through local interactions between objects.  
-### **GNN**
+### GNN
 In the GNN, an edge function $f_{edge}$ computes directional messages (representing interactions) between every pair of object slots $i$ and $j$.
 $$
 e_t^{(i,j)} = f_{edge}\left(\left[z_t^i, z_t^j\right]\right)
